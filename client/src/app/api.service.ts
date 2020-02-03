@@ -14,5 +14,20 @@ const apiUrl = '/api/article';
 })
 export class ApiService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      return of(result as T);
+    };
+  }
+
+  getArticles(): Observable<Article[]> {
+    return this.http.get<Article[]>(apiUrl).pipe(
+      tap(article => console.log('fetched articles')), catchError(this.handleError('getArticles', []))
+    );
+  }
+
+
 }
