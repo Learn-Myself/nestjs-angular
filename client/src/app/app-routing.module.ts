@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { Routes, RouterModule } from '@angular/router';
 import { ArticlesComponent } from './articles/articles.component';
 import { ShowArticleComponent } from './show-article/show-article.component';
 import { AddArticleComponent } from './add-article/add-article.component';
 import { EditArticleComponent } from './edit-article/edit-article.component';
-import {Routes, RouterModule} from '@angular/router';
 
 const routes: Routes = [
   {
@@ -35,13 +33,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    RouterModule.forRoot(routes)
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
-
 })
-
 export class AppRoutingModule { }
