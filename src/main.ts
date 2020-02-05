@@ -5,6 +5,10 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
+import {ConfigService} from './config/config.service';
+
+const configs = new ConfigService('.env');
+const APPLICATION_PORT = configs.get('PORT', 3000);
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -12,10 +16,6 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
   app.setGlobalPrefix('/api');
-  // app.useStaticAssets({
-  //   root: join(__dirname, '..', 'client/dist/client'),
-  //   prefix: '/',
-  // });
-  await app.listen(3000);
+  await app.listen(APPLICATION_PORT);
 }
 bootstrap();
