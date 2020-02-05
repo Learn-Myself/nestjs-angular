@@ -15,18 +15,18 @@ export class ArticleService {
     }
 
     async findAll(): Promise<Article[]> {
-        return this.articleModel.find().exec();
+        return this.articleModel.find();
     }
 
     async find(id: string): Promise<Article[]> {
-        return this.articleModel.findById(id).exec();
+        return this.articleModel.findById(id);
     }
 
     async update(id: string, articleDto: ArticleDto): Promise<Article> {
-        return await this.articleModel.findByIdAndUpdate(id, articleDto);
+        return await this.articleModel.updateOne(this.articleModel.findById(id), articleDto);
     }
 
     async delete(id: string, articleDto: ArticleDto): Promise<Article> {
-        return await this.articleModel.findByIdAndRemove(id);
+        return await this.articleModel.deleteOne(this.articleModel.findById(id), articleDto);
     }
 }
