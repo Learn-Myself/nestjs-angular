@@ -1,15 +1,11 @@
 FROM node:12.15
 
-ENV SERVER=/usr/src/app
-RUN mkdir -p $SERVER
-WORKDIR $SERVER
-
-COPY package.json /usr/src/app
+WORKDIR /usr/src
 
 RUN yarn add @nestjs/cli
 
 RUN yarn install
 
-COPY . /usr/src/app
+EXPOSE 3000
 
 CMD [ "yarn", "start" ]

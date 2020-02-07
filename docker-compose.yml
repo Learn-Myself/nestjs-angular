@@ -2,27 +2,29 @@ version: "3.5"
 
 services:
   client:
-    build:
-      context: .
-      dockerfile: ./client/Dockerfile
+    container_name: backend-chat-client
     volumes:
-    - .:/usr/client/src/app
-
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - .:/usr/src/
-    ports:
-      - "3000:3000"
-    depends_on:
-      - 'database'
+      - .:/usr/src
+      - /usr/src/client/node_modules
+    build: ./client
 
   database:
+    container_name: backend-chat-database
     image: mongo:latest
     command: mongod --port 27015
     environment:
       - MONGODB_DATABASE="backend-chat"
     ports:
       - "27015:27015"
+
+  api:
+    container_name: backend-chat-api
+    volumes:
+      - /usr/src/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - 'database'
+    links:
+      - database
+    build: .
