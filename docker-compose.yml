@@ -1,7 +1,25 @@
 version: "3.5"
 
 services:
-  mongo:
+  client:
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    volumes:
+    - .:/usr/client/src/app
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - 'database'
+
+  database:
     image: mongo:latest
     command: mongod --port 27015
     environment:
