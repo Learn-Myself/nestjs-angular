@@ -1,39 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ArticlesComponent } from './articles/articles.component';
-import { ShowArticleComponent } from './show-article/show-article.component';
-import { AddArticleComponent } from './add-article/add-article.component';
-import { EditArticleComponent } from './edit-article/edit-article.component';
+
+import { AuthGuard } from './core/guards/auth.guard';
+import { LayoutComponent } from './layouts/layout.component';
+
 
 const routes: Routes = [
-  {
-    path: 'articles',
-    component: ArticlesComponent,
-    data: { title: 'List of Articles' }
-  },
-  {
-    path: 'show-article/:id',
-    component: ShowArticleComponent,
-    data: { title: 'Show Product' }
-  },
-  {
-    path: 'add-article',
-    component: AddArticleComponent,
-    data: { title: 'Add Article' }
-  },
-  {
-    path: 'edit-article/:id',
-    component: EditArticleComponent,
-    data: { title: 'Edit Article' }
-  },
-  { path: '',
-    redirectTo: '/articles',
-    pathMatch: 'full'
-  }
+  { path: 'account',  loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
+  // tslint:disable-next-line: max-line-length
+  { path: '',  component: LayoutComponent, loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule), canActivate: [AuthGuard]},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'top'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
