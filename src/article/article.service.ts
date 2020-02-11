@@ -18,15 +18,15 @@ export class ArticleService {
         return this.articleModel.find();
     }
 
-    async find(id: string): Promise<Article[]> {
+    async find(id: string): Promise<Article> {
         return this.articleModel.findById(id);
     }
 
     async update(id: string, articleDto: ArticleDto): Promise<Article> {
-        return await this.articleModel.updateOne(this.articleModel.findById(id), articleDto);
+        return this.articleModel.updateOne(this.articleModel.findById(id), articleDto);
     }
 
-    async delete(id: string, articleDto: ArticleDto): Promise<Article> {
-        return await this.articleModel.deleteOne(this.articleModel.findById(id), articleDto);
+    async delete(id: string): Promise<any> {
+        return this.articleModel.deleteOne(this.articleModel.findById(id));
     }
 }
